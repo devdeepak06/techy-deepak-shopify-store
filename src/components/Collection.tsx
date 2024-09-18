@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { config } from "../constant";
 import { AllProductsData, ProductNode } from "../types/shopify";
 
-const { shop_url, storefrontAccessToken, client } = config();
-const storeUrl = `https://${shop_url}/api/2024-07/graphql.json`;
+// const { shop_url, storefrontAccessToken } = config();
+const { client } = config();
+// const storeUrl = `https://${shop_url}/api/2024-07/graphql.json`;
 
 //Define your GraphQL queries based on the data you need
 const allProductsQuery = `
@@ -129,126 +130,126 @@ if (data) {
 } else if (extensions) {
   console.log(extensions, "extensions");
 }
-const query = `
-{
-  products(first: 100) {
-  nodes {
-      id
-      title
-      handle
-      createdAt
-      description
-      descriptionHtml
-      images(first: 10) {
-        nodes {
-          altText
-          id
-          url
-        }
-      }
-      options(first: 10) {
-        id
-        name
-        values
-      }
-      productType
-      publishedAt
-      tags
-      updatedAt
-      vendor
-      variants(first: 10) {
-        nodes {
-          compareAtPrice {
-            amount
-            currencyCode
-          }
-          image {
-            altText
-            height
-            id
-            url
-          }
-          id
-          price {
-            amount
-            currencyCode
-          }
-          sku
-          title
-          weight
-          weightUnit
-          taxable
-          requiresShipping
-          selectedOptions {
-            name
-            value
-          }
-          unitPriceMeasurement {
-            quantityValue
-            referenceUnit
-            referenceValue
-            quantityUnit
-            measuredType
-          }
-          unitPrice {
-            amount
-            currencyCode
-          }
-        }
-      }
-    }
-  }
-}
-`;
+// const query = `
+// {
+//   products(first: 100) {
+//   nodes {
+//       id
+//       title
+//       handle
+//       createdAt
+//       description
+//       descriptionHtml
+//       images(first: 10) {
+//         nodes {
+//           altText
+//           id
+//           url
+//         }
+//       }
+//       options(first: 10) {
+//         id
+//         name
+//         values
+//       }
+//       productType
+//       publishedAt
+//       tags
+//       updatedAt
+//       vendor
+//       variants(first: 10) {
+//         nodes {
+//           compareAtPrice {
+//             amount
+//             currencyCode
+//           }
+//           image {
+//             altText
+//             height
+//             id
+//             url
+//           }
+//           id
+//           price {
+//             amount
+//             currencyCode
+//           }
+//           sku
+//           title
+//           weight
+//           weightUnit
+//           taxable
+//           requiresShipping
+//           selectedOptions {
+//             name
+//             value
+//           }
+//           unitPriceMeasurement {
+//             quantityValue
+//             referenceUnit
+//             referenceValue
+//             quantityUnit
+//             measuredType
+//           }
+//           unitPrice {
+//             amount
+//             currencyCode
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// `;
 
 const Collection = () => {
-  const [products, setProducts] = useState<ProductNode[]>([]);
+  // const [products, setProducts] = useState<ProductNode[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [allProducts, setAllProducts] = useState<ProductNode[]>([]);
 
-  useEffect(() => {
-    async function fetchProducts(): Promise<void> {
-      try {
-        // Fetch data from Shopify Storefront API
-        const response = await axios.post<{ data: AllProductsData }>(
-          storeUrl,
-          { query },
-          {
-            headers: {
-              "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+  // useEffect(() => {
+  //   async function fetchProducts(): Promise<void> {
+  //     try {
+  //       // Fetch data from Shopify Storefront API
+  //       const response = await axios.post<{ data: AllProductsData }>(
+  //         storeUrl,
+  //         { query },
+  //         {
+  //           headers: {
+  //             "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
 
-        // Check if the response structure is correct
-        if (
-          response.data &&
-          response.data.data &&
-          response.data.data.products
-        ) {
-          const fetchedProducts: ProductNode[] =
-            response.data.data.products.nodes.map((edge) => edge);
-          setProducts(fetchedProducts);
-          // console.log(fetchedProducts);
-        } else {
-          throw new Error("Unexpected response structure");
-        }
-      } catch (error) {
-        setError("Error fetching products");
-        console.error("Error fetching products:", error);
-      }
-    }
+  //       // Check if the response structure is correct
+  //       if (
+  //         response.data &&
+  //         response.data.data &&
+  //         response.data.data.products
+  //       ) {
+  //         const fetchedProducts: ProductNode[] =
+  //           response.data.data.products.nodes.map((edge) => edge);
+  //         setProducts(fetchedProducts);
+  //         // console.log(fetchedProducts);
+  //       } else {
+  //         throw new Error("Unexpected response structure");
+  //       }
+  //     } catch (error) {
+  //       setError("Error fetching products");
+  //       console.error("Error fetching products:", error);
+  //     }
+  //   }
 
-    fetchProducts();
-  }, []);
+  //   fetchProducts();
+  // }, []);
 
   useEffect(() => {
     async function fetchedAllProducts() {
       try {
         const { data, errors, extensions } =
           await client.request<AllProductsData>(allProductsQuery);
-        if (data) {
+        if (data && data.products) {
           const fetchedAllProd = data.products.nodes;
           setAllProducts(fetchedAllProd);
           // console.log(fetchedAllProd);
@@ -258,7 +259,8 @@ const Collection = () => {
           console.log("No data received");
         }
       } catch (error) {
-        console.error("Request failed:", error);
+        setError("Error fetching products");
+        console.error("Error fetching products:", error);
       }
     }
 
@@ -268,7 +270,7 @@ const Collection = () => {
   return (
     <div>
       {error && <p>{error}</p>}
-      <h4 className="text-center text-2xl font-bold from-neutral-950">
+      {/* <h4 className="text-center text-2xl font-bold from-neutral-950">
         Products using storefront api
       </h4>
       {products.length > 0 ? (
@@ -312,7 +314,7 @@ const Collection = () => {
         </ul>
       ) : (
         <p>No products available</p>
-      )}
+      )} */}
 
       <h4 className="text-center text-2xl font-bold from-neutral-950">
         Products using storefront api
@@ -357,7 +359,7 @@ const Collection = () => {
           ))}
         </ul>
       ) : (
-        <p>No products available</p>
+        <p>Loading...</p>
       )}
     </div>
   );

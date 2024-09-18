@@ -1,62 +1,62 @@
 // src/types/shopify.d.ts
-export interface price{
-  amount: string;
-  currencyCode: string;
-}
+// export interface price{
+//   amount: string;
+//   currencyCode: string;
+// }
 
-export interface compareAtPrice {
-  amount: string;
-  currencyCode: string;
-}
+// export interface compareAtPrice {
+//   amount: string;
+//   currencyCode: string;
+// }
 
-export interface Variant {
-  id: string;
-  title: string;
-  price: price;
-  compareAtPrice: compareAtPrice;
-}
+// export interface Variant {
+//   id: string;
+//   title: string;
+//   price: price;
+//   compareAtPrice: compareAtPrice;
+// }
 
-export interface Image {
-  src: string;
-  altText: string | null;
-}
+// export interface Image {
+//   src: string;
+//   altText: string | null;
+// }
 
-export interface Product {
-  id: string;
-  title: string;
-  descriptionHtml: string;
-  vendor: string;
-  productType: string;
-  handle: string;
-  createdAt: string;
-  updatedAt: string;
-  variants: {
-    edges: {
-      node: Variant;
-    }[];
-  };
-  images: {
-    edges: {
-      node: Image;
-    }[];
-  };
-}
+// export interface Product {
+//   id: string;
+//   title: string;
+//   descriptionHtml: string;
+//   vendor: string;
+//   productType: string;
+//   handle: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   variants: {
+//     edges: {
+//       node: Variant;
+//     }[];
+//   };
+//   images: {
+//     edges: {
+//       node: Image;
+//     }[];
+//   };
+// }
 
-export interface ProductsResponse {
-  products: {
-    edges: {
-      node: Product;
-    }[];
-  };
-}
+// export interface ProductsResponse {
+//   products: {
+//     edges: {
+//       node: Product;
+//     }[];
+//   };
+// }
 
-interface ImageNode {
+export interface ImageNode {
   altText: string | null;
   id: string;
   url: string;
 }
 
-interface VariantNode {
+export interface VariantNode {
   compareAtPrice: {
     amount: string | null;
     currencyCode: string | null;
@@ -90,7 +90,7 @@ interface VariantNode {
   } | null;
 }
 
-interface ProductNode {
+export interface ProductNode {
   id: string;
   title: string;
   handle: string;
@@ -115,7 +115,7 @@ interface ProductNode {
   };
 }
 
-interface AllProductsData {
+export interface AllProductsData {
   products: {
     nodes: ProductNode[];
   };
