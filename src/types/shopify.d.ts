@@ -38,7 +38,10 @@ export interface VariantNode {
     currencyCode: string | null;
   } | null;
 }
-
+export interface OptionValue {
+  id: string;
+  name: string;
+}
 export interface ProductNode {
   id: string;
   title: string;
@@ -52,7 +55,7 @@ export interface ProductNode {
   options: {
     id: string;
     name: string;
-    values: string[];
+    optionValues: OptionValue[] | null;
   }[];
   productType: string | null;
   publishedAt: string | null;

@@ -16,6 +16,7 @@ const CollectionComponent = () => {
         if (data && data.products) {
           const fetchedAllProd = data.products.nodes;
           setAllProducts(fetchedAllProd);
+          console.log(fetchedAllProd);
         } else if (errors) {
           console.error("Errors occurred:", errors);
         } else if (extensions) {

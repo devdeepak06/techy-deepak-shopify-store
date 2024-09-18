@@ -19,7 +19,10 @@ query getProducts {
       options(first: 10) {
         id
         name
-        values
+        optionValues {
+          id
+          name
+        }
       }
       productType
       publishedAt
