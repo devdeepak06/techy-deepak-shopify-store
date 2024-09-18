@@ -79,57 +79,57 @@ query getProducts {
   }
 }`;
 
-const singleProductQuery = `
-  query ProductQuery($handle: String) {
-     product(handle: $handle) {
-    id
-    title
-    variants(first: 5) {
-      edges {
-        node {
-          price {
-            amount
-            currencyCode
-          }
-          compareAtPrice {
-            amount
-            currencyCode
-          }
-          title
-          weight
-          sku
-        }
-      }
-    }
-    handle
-    availableForSale
-    createdAt
-    description
-    descriptionHtml
-    featuredImage {
-      altText
-      height
-      id
-      width
-    }
+// const singleProductQuery = `
+//   query ProductQuery($handle: String) {
+//      product(handle: $handle) {
+//     id
+//     title
+//     variants(first: 5) {
+//       edges {
+//         node {
+//           price {
+//             amount
+//             currencyCode
+//           }
+//           compareAtPrice {
+//             amount
+//             currencyCode
+//           }
+//           title
+//           weight
+//           sku
+//         }
+//       }
+//     }
+//     handle
+//     availableForSale
+//     createdAt
+//     description
+//     descriptionHtml
+//     featuredImage {
+//       altText
+//       height
+//       id
+//       width
+//     }
     
-  }
-  }
-`;
+//   }
+//   }
+// `;
 
-const { data, errors, extensions } = await client.request(singleProductQuery, {
-  variables: {
-    handle: "millet-monk-millet-bar",
-  },
-});
+// const { data, errors, extensions } = await client.request(singleProductQuery, {
+//   variables: {
+//     handle: "millet-monk-millet-bar",
+//   },
+// });
 
-if (data) {
-  // console.log(data.product.title, data);
-} else if (errors) {
-  console.log("errors", errors);
-} else if (extensions) {
-  console.log(extensions, "extensions");
-}
+// if (data) {
+//   // console.log(data.product.title, data);
+// } else if (errors) {
+//   console.log("errors", errors);
+// } else if (extensions) {
+//   console.log(extensions, "extensions");
+// }
 // const query = `
 // {
 //   products(first: 100) {
@@ -268,7 +268,7 @@ const Collection = () => {
   }, []);
 
   return (
-    <div>
+    <div id="Collection">
       {error && <p>{error}</p>}
       {/* <h4 className="text-center text-2xl font-bold from-neutral-950">
         Products using storefront api

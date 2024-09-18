@@ -1,10 +1,11 @@
 import React from "react";
-import Collection from "./components/Collection";
+import { Header, CollectionComponent } from "./components";
 
 function App() {
   return (
     <React.Fragment>
-      <Collection />
+      <Header />
+      <CollectionComponent />
     </React.Fragment>
   );
 }
