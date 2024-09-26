@@ -16,7 +16,6 @@ const CollectionComponent = () => {
         if (data && data.products) {
           const fetchedAllProd = data.products.nodes;
           setAllProducts(fetchedAllProd);
-          console.log(fetchedAllProd);
         } else if (errors) {
           console.error("Errors occurred:", errors);
         } else if (extensions) {
@@ -49,9 +48,18 @@ const CollectionComponent = () => {
                   height={200}
                 />
               ) : (
-                <p>No images available</p>
+                <img
+                  src="https://images.unsplash.com/photo-1635352721344-ee65dbac28f0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt={product.title}
+                  width={200}
+                  height={200}
+                />
               )}
-              <h3>{product.title}</h3>
+              <a
+                href={`https://techydeepak.myshopify.com/products/${product.handle}`}
+              >
+                <h3>{product.title}</h3>
+              </a>
               <p className="flex justify-between">
                 {product.variants.nodes.length > 0 &&
                 product.variants.nodes[0].price &&
@@ -60,7 +68,7 @@ const CollectionComponent = () => {
                     {product.variants.nodes[0].price.amount}
                   </span>
                 ) : (
-                  <span>No price available</span>
+                  <span></span>
                 )}
 
                 {product.variants.nodes.length > 0 &&
@@ -70,17 +78,59 @@ const CollectionComponent = () => {
                     {product.variants.nodes[0].compareAtPrice.amount}
                   </span>
                 ) : (
-                  <span>No compare at price</span>
+                  <span></span>
                 )}
               </p>
+
+              <form
+                method="post"
+                action="https://techydeepak.myshopify.com/cart/add"
+                id={`product-form-template--${product.id
+                  .split("/")
+                  .pop()}__main`}
+                accept-charset="UTF-8"
+                className="form flex justify-center py-5"
+                encType="multipart/form-data"
+                data-type="add-to-cart-form"
+              >
+                <input type="hidden" name="form_type" value="product" />
+                <input type="hidden" name="utf8" value="✓" />
+                <input
+                  type="hidden"
+                  name="id"
+                  value="45623035199709"
+                  className="product-variant-id"
+                />
+                <div className="product-form__buttons">
+                  <button
+                    id={`ProductSubmitButton-template--${product.id
+                      .split("/")
+                      .pop()}__main`}
+                    type="submit"
+                    name="add"
+                    aria-haspopup="dialog" className="text-white"
+                  >
+                    <span>Add to cart</span>
+                  </button>
+                </div>
+                <input type="hidden" name="product-id" value="8770596372701" />
+                <input
+                  type="hidden"
+                  name="section-id"
+                  value={`template--${product.id.split("/").pop()}__main`}
+                />
+              </form>
             </li>
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
     </div>
   );
 };
+function Loading() {
+  return <h2 className="text-center">🌀 Loading...</h2>;
+}
 
 export default CollectionComponent;
