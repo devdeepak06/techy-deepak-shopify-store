@@ -1,42 +1,59 @@
-import React, { Profiler } from "react";
-import { Header, CollectionComponent } from "./components";
-
-type ProfilerOnRenderCallback = (
-  id: string,
-  phase: "mount" | "update" | "nested-update",
-  actualDuration: number,
-  baseDuration: number,
-  startTime: number,
-  commitTime: number
-) => void;
-
-const onRenderCallback: ProfilerOnRenderCallback = (
-  id,
-  phase,
-  actualDuration,
-  baseDuration,
-  startTime,
-  commitTime
-) => {
-  console.log({
-    id,
-    phase,
-    actualDuration,
-    baseDuration,
-    startTime,
-    commitTime,
-  });
-};
+import { useState } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Header from "./components/Header";
+import AppRoutes from "./AppRoutes";
+import { Product } from "./types/types";
 
 function App() {
-  return (
-    <React.Fragment>
-      <Profiler id="Header" onRender={onRenderCallback}>
-        <Header />
-      </Profiler>
+  // Initialize cart items from localStorage
+  const [cartItems, setCartItems] = useState<Product[]>(() => {
+    const savedItems = localStorage.getItem("cartItems");
+    return savedItems ? JSON.parse(savedItems) : [];
+  });
 
-      <CollectionComponent />
-    </React.Fragment>
+  // Update total items in cart
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Add to cart functionality
+  const AddToCartDrawer = (product: Product) => {
+    setCartItems((prevItems: Product[]) => {
+      const existingItemIndex = prevItems.findIndex(
+        (item) => item.id === product.id
+      );
+
+      if (existingItemIndex > -1) {
+        const updatedItems = [...prevItems];
+        updatedItems[existingItemIndex].quantity += product.quantity;
+        localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+        return updatedItems;
+      } else {
+        const updatedItems = [...prevItems, product];
+        localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+        return updatedItems;
+      }
+    });
+  };
+
+  // Remove from cart functionality
+  const removeFromCart = (productId: string) => {
+    setCartItems((prevItems: Product[]) => {
+      const updatedItems = prevItems.filter((item) => item.id !== productId);
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+      return updatedItems;
+    });
+  };
+
+  return (
+    <Router>
+      <>
+        <Header totalItems={totalItems} />
+        <AppRoutes
+          cartItems={cartItems}
+          AddToCartDrawer={AddToCartDrawer}
+          removeFromCart={removeFromCart}
+        />
+      </>
+    </Router>
   );
 }
 

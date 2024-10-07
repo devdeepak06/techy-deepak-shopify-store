@@ -72,3 +72,43 @@ query getProducts {
     }
   }
 }`;
+
+export const singleProductQuery = `
+  query ProductQuery($handle: String) {
+     product(handle: $handle) {
+    id
+    title
+    variants(first: 5) {
+      edges {
+        node {
+          price {
+            amount
+            currencyCode
+          }
+          compareAtPrice {
+            amount
+            currencyCode
+          }
+          id
+          title
+          weight
+          sku
+        }
+      }
+    }
+    handle
+    availableForSale
+    createdAt
+    description
+    descriptionHtml
+    images(first: 10) {
+        nodes {
+          altText
+          id
+          url
+        }
+      }
+    
+  }
+  }
+`;

@@ -72,3 +72,54 @@ export interface AllProductsData {
     nodes: ProductNode[];
   };
 }
+export interface MVariantNode {
+  node: {
+    compareAtPrice: {
+      amount: string | null;
+      currencyCode: string | null;
+    } | null;
+    image: ImageNode | null;
+    id: string | null;
+    price: {
+      amount: string | null;
+      currencyCode: string | null;
+    } | null;
+    sku: string | null;
+    title: string;
+    weight: number | null;
+    weightUnit: string | null;
+    taxable: boolean;
+    requiresShipping: boolean;
+    selectedOptions: {
+      name: string;
+      value: string;
+    }[];
+    unitPriceMeasurement: {
+      quantityValue: number | null;
+      referenceUnit: string | null;
+      referenceValue: number | null;
+      quantityUnit: string | null;
+      measuredType: string | null;
+    } | null;
+    unitPrice: {
+      amount: string | null;
+      currencyCode: string | null;
+    } | null;
+  };
+}
+
+export interface SingleProductsData {
+  id: string;
+  title: string;
+  handle: string;
+  availableForSale: boolean;
+  createdAt: string;
+  description: string;
+  descriptionHtml: string;
+  images: {
+    nodes: ImageNode[];
+  };
+  variants: {
+    edges: MVariantNode[];
+  };
+}
