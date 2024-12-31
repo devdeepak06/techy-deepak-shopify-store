@@ -24,7 +24,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
 }) => {
   return (
     <Routes>
-      <Route path="/home" element={<HomePage />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/collections/catalog" element={<CollectionComponent />} />
       <Route path="/pages/task" element={<TaskList />} />
       <Route path="/pages/contact" element={<ContactUs />} />

@@ -11,7 +11,7 @@ const Header = ({ totalItems }: HeaderProps) => {
       try {
         const navs = {
           nab_items: [
-            { id: 1, handle: "home", name: "Home", url: "/home" },
+            { id: 1, handle: "home", name: "Home", url: "/" },
             {
               id: 2,
               handle: "catalog",
@@ -43,7 +43,7 @@ const Header = ({ totalItems }: HeaderProps) => {
     <header className="header z-20 grid items-center grid-cols-[auto_auto_1fr] gap-x-8 mx-auto my-0 px-20 py-5 sticky top-0 bg-white">
       <h2 className="col-start-1 col-end-2 row-start-1 row-end-2 m-0 leading-none justify-self-start ">
         <Link
-          to="/home"
+          to="/"
           className="header__heading-link link link--text focus-inset inline-block p-3 no-underline break-words"
         >
           <span className="h2 leading-none">techydeepak</span>
